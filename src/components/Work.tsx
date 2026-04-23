@@ -2,37 +2,38 @@ import { useState, useCallback } from "react";
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import reactLogo from "../assets/react.svg";
 
 const projects = [
   {
-    title: "CallHQ",
-    category: "Voice AI Calling Platform",
-    tools: "Voice AI, Calling Automation, CRM Integrations",
-    image: "/images/callhq.png",
-    link: "https://callhq.ai",
+    title: "Thesis: Inverse Reinforcement Learning",
+    category: "Bayesian IRL for non-stationary goals",
+    tools:
+      "Python, Bayesian IRL, Regression, Reward modeling, Trajectory analysis",
+    image: reactLogo,
   },
   {
-    title: "Whatsapp Automation",
-    category: "WABA Application",
-    tools: "WhatsApp Business API, Workflow Automation, Notifications",
-    image: "/images/whatsapp.png",
-    link: "https://whatsapp.callhq.ai",
+    title: "Smart India Hackathon",
+    category: "E-commerce forecasting & financial modeling",
+    tools: "Forecasting, P&L, Cash flow, Balance sheet, Scenario modeling",
+    image: reactLogo,
   },
   {
-    title: "Broki",
-    category: "Real Estate Platform for FnB Industry",
-    tools: "Property Discovery, Lead Management, Marketplace Workflows",
-    image: "/images/broki.png",
-    link: "https://broki.in",
-  },
-  {
-    title: "Orrdr.com",
-    category: "Ecommerce Platform and Mobile App",
-    tools: "Ecommerce, Mobile Experience, Order Management",
-    image: "/images/orrdr.png",
-    link: "https://orrdr.com",
+    title: "Selected Work",
+    category: "Backend, data pipelines, event-driven systems",
+    tools: "Microservices, Kafka, Azure IoT Hub, AWS (Kinesis/Lambda/Glue)",
+    image: reactLogo,
+    link: "https://github.com/rishitank1805",
   },
 ];
+
+function splitTags(input?: string) {
+  return (input ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .slice(0, 8);
+}
 
 const Work = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -107,8 +108,14 @@ const Work = () => {
                           {project.category}
                         </p>
                         <div className="carousel-tools">
-                          <span className="tools-label">Tools & Features</span>
-                          <p>{project.tools}</p>
+                          <span className="tools-label">Tools</span>
+                          <div className="carousel-tags">
+                            {splitTags(project.tools).map((tag) => (
+                              <span className="carousel-tag" key={tag}>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>

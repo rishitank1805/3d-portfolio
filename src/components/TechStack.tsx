@@ -11,23 +11,122 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
-const textureLoader = new THREE.TextureLoader();
-const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
+import {
+  siPython,
+  siC,
+  siCplusplus,
+  siOpenjdk,
+  siGo,
+  siJavascript,
+  siDjango,
+  siNodedotjs,
+  siReact,
+  siOpencv,
+  siTensorflow,
+  siKeras,
+  siPytorch,
+  siScipy,
+} from "simple-icons";
+
+type TechItem = {
+  label: string;
+  iconSvg: string;
+};
+
+const techItems: TechItem[] = [
+  // Programming languages
+  { label: "Python", iconSvg: iconToSvg(siPython) },
+  { label: "C", iconSvg: iconToSvg(siC) },
+  { label: "C++", iconSvg: iconToSvg(siCplusplus) },
+  { label: "Java", iconSvg: iconToSvg(siOpenjdk) }, // closest match in Simple Icons
+  { label: "Go", iconSvg: iconToSvg(siGo) },
+  { label: "JavaScript", iconSvg: iconToSvg(siJavascript) },
+
+  // Frameworks / libraries
+  { label: "Django", iconSvg: iconToSvg(siDjango) },
+  { label: "Node.js", iconSvg: iconToSvg(siNodedotjs) },
+  { label: "React", iconSvg: iconToSvg(siReact) },
+  { label: "OpenCV", iconSvg: iconToSvg(siOpencv) },
+  { label: "TensorFlow", iconSvg: iconToSvg(siTensorflow) },
+  { label: "Keras", iconSvg: iconToSvg(siKeras) },
+  { label: "PyTorch", iconSvg: iconToSvg(siPytorch) },
+  { label: "SciPy", iconSvg: iconToSvg(siScipy) },
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
+
+function iconToSvg(icon: { path: string; hex?: string }) {
+  const fill = icon.hex ? `#${icon.hex}` : "rgba(10, 14, 23, 0.92)";
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="${fill}" d="${icon.path}"/></svg>`;
+}
+
+function makeLogoLabelTexture(item: TechItem) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return new THREE.CanvasTexture(canvas);
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const width = 512;
+  const height = 256;
+  canvas.width = Math.floor(width * dpr);
+  canvas.height = Math.floor(height * dpr);
+  ctx.scale(dpr, dpr);
+
+  // Card background (keeps the "white" look)
+  const r = 38;
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
+  ctx.strokeStyle = "rgba(10, 14, 23, 0.14)";
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.moveTo(r, 0);
+  ctx.arcTo(width, 0, width, height, r);
+  ctx.arcTo(width, height, 0, height, r);
+  ctx.arcTo(0, height, 0, 0, r);
+  ctx.arcTo(0, 0, width, 0, r);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Text label (bottom)
+  ctx.fillStyle = "rgba(10, 14, 23, 0.92)";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+  let fontSize = 44;
+  const maxWidth = 460;
+  while (fontSize > 26) {
+    ctx.font = `800 ${fontSize}px Geist, system-ui, -apple-system, Segoe UI, sans-serif`;
+    if (ctx.measureText(item.label).width <= maxWidth) break;
+    fontSize -= 2;
+  }
+  ctx.font = `800 ${fontSize}px Geist, system-ui, -apple-system, Segoe UI, sans-serif`;
+  ctx.fillText(item.label, width / 2, height - 36);
+
+  // Icon (top) - drawn asynchronously from embedded SVG
+  const iconImg = new Image();
+  iconImg.decoding = "async";
+  iconImg.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(item.iconSvg)}`;
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 8;
+  texture.needsUpdate = true;
+
+  iconImg.onload = () => {
+    const target = 118; // icon box size
+    const x = width / 2 - target / 2;
+    const y = 34;
+    ctx.drawImage(iconImg, x, y, target, target);
+    texture.needsUpdate = true;
+  };
+
+  return texture;
+}
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
 const spheres = [...Array(30)].map(() => ({
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
+  materialIndex: Math.floor(Math.random() * techItems.length),
 }));
 
 type SphereProps = {
@@ -152,6 +251,7 @@ const TechStack = () => {
     };
   }, []);
   const materials = useMemo(() => {
+    const textures = techItems.map((item) => makeLogoLabelTexture(item));
     return textures.map(
       (texture) =>
         new THREE.MeshPhysicalMaterial({
@@ -192,8 +292,8 @@ const TechStack = () => {
           {spheres.map((props, i) => (
             <SphereGeo
               key={i}
-              {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
+              scale={props.scale}
+              material={materials[props.materialIndex % materials.length]}
               isActive={isActive}
             />
           ))}

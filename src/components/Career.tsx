@@ -15,58 +15,50 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Co-Founder</h4>
-                <h5>CallHQ.ai</h5>
+                <h4>Working Student Backend Developer</h4>
+                <h5>Ison GmbH · Hamburg, Germany</h5>
               </div>
-              <h3>NOW</h3>
+              <h3>2024–2026</h3>
             </div>
             <p>
-              Building CallHQ.ai, a voice AI platform for
-              automating customer calls, support, and conversions.
+              Designed and deployed a microservices-based backend architecture
+              (Python, Docker, Kubernetes) integrating PV, battery, and heat-pump
+              systems, centralizing analytics and improving forecasting accuracy.
+              Optimized scheduler execution windows across 100+ recurring jobs using
+              SQL (PostgreSQL), reducing cloud compute costs by 30% without
+              impacting SLAs. Built a sensor data warehousing pipeline using Azure
+              IoT Hub enabling ingestion of millions of time-series events per day.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Adobe</h4>
-                <h5>6+ years · Noida</h5>
+                <h4>Software Developer (Part Time)</h4>
+                <h5>Amsight GmbH · Hamburg, Germany</h5>
               </div>
-              <h3>2017–24</h3>
+              <h3>2024</h3>
             </div>
             <p>
-              Senior Lead Software Engineer (Feb 2024 – May 2024). Lead Software
-              Engineer (Feb 2021 – Feb 2024). Software Engineer II (Dec 2017 –
-              Feb 2021): internationalization, globalization, and localization for
-              Adobe Technical Communication Suite; functional and linguistic testing
-              strategy; in-house tooling; collaboration with product and engineering
-              for high-quality localized releases.
+              Contributed to a low-code application in TypeScript for additive
+              manufacturing workflows. Designed a generalized data modeling
+              approach supporting structured and unstructured manufacturing data,
+              and optimized processing flows to reduce end-to-end latency by ~30%.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Consultant</h4>
-                <h5>Genpact Headstrong </h5>
+                <h4>Quant Research Analyst</h4>
+                <h5>Tara Capital Partners · Mumbai, India (Remote)</h5>
               </div>
-              <h3>2016–17</h3>
+              <h3>2022–2023</h3>
             </div>
             <p>
-              Sep 2016 – Nov 2017. Developed and maintained WCF services consumed
-              by the UI; deployment support across environments; NUnit tests and
-              coverage; bug fixes from QA and users; database work.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Sf Engineer</h4>
-                <h5>Infogain</h5>
-              </div>
-              <h3>2013-16</h3>
-            </div>
-            <p>
-              Software engineering across enterprise projects, contributing to
-              design, development, and delivery of business applications.
+              Built Power BI dashboards for portfolio analytics, automating
+              reporting and reducing report generation time by 25%. Developed
+              real-time financial data pipelines on AWS (Kinesis, Lambda, Glue,
+              Airflow) for high-frequency market data, and automated risk monitoring
+              and anomaly detection pipelines using Python and SQL.
             </p>
           </div>
         </div>
